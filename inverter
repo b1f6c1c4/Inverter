@@ -10,20 +10,12 @@ import subprocess
 
 global d
 
-try:
-    with open('inverter.json5') as j:
-        d = json5.load(j)
-except:
-    with open('/etc/inverter.json5') as j:
-        d = json5.load(j)
+with open('inverter.json5') as j:
+    d = json5.load(j)
 
 logFormatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
 rootLogger = logging.getLogger()
-
-try:
-    fileHandler = logging.FileHandler('/var/log/inverter.log')
-except:
-    fileHandler = logging.FileHandler('./inverter.log')
+fileHandler = logging.FileHandler('./inverter.log')
 
 fileHandler.setFormatter(logFormatter)
 rootLogger.addHandler(fileHandler)

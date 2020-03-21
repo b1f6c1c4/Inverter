@@ -4,18 +4,18 @@
 
 ## Usage
 
-```bash
-sudo ./install.sh
-```
-
-Configuration file `/etc/inverter.json5` or `./inverter.json5`:
+Configuration file `./inverter.json5`:
 ```json5
 {
   key: 'enter', // trigger keys
 }
 ```
 
-Logs to `/var/log/inverter.log` or `./inverter.log`.
+```bash
+sudo ./inverter
+```
+
+Logs to `./inverter.log`.
 
 ## Requirements
 
