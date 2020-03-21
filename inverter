@@ -1,0 +1,49 @@
+#!/usr/bin/python3
+
+import keyboard
+import json5
+import datetime
+import logging
+import sys
+import time
+import subprocess
+
+global d
+
+try:
+    with open('inverter.json5') as j:
+        d = json5.load(j)
+except:
+    with open('/etc/inverter.json5') as j:
+        d = json5.load(j)
+
+logFormatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+rootLogger = logging.getLogger()
+
+try:
+    fileHandler = logging.FileHandler('/var/log/inverter.log')
+except:
+    fileHandler = logging.FileHandler('./inverter.log')
+
+fileHandler.setFormatter(logFormatter)
+rootLogger.addHandler(fileHandler)
+
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(logFormatter)
+rootLogger.addHandler(consoleHandler)
+
+while True:
+    try:
+        logging.info('waiting for key ' + str(d['key']))
+        keyboard.wait(d['key'])
+        logging.warning('Inverter triggered')
+        subprocess.run('xrandr-invert-colors')
+    except ImportError as e:
+        logging.error(e)
+        break
+    except KeyboardInterrupt:
+        logging.warning('Got KeyboardInterrupt')
+        break
+    except:
+        logging.error(sys.exc_info()[0])
+        time.sleep(1)

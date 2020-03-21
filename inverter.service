@@ -1,0 +1,9 @@
+[Unit]
+Description=Invert your screen color when you want to
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/inverter
+
+[Install]
+WantedBy=multi-user.target
